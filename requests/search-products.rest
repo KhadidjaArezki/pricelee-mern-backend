@@ -1,0 +1,11 @@
+POST http://localhost:3003/api/products
+Content-Type: application/json
+
+{
+  "keywords": "laptop",
+  "filters": {
+    "categoryId": "58058",
+    "minPrice": "50.00",
+    "maxPrice": "100.00"
+  }
+}

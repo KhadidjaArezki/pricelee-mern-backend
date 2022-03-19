@@ -8,13 +8,6 @@ const requestLogger = (request, _, next) => {
   next()
 }
 
-const responseLogger = (_, response, next) => {
-  logger.info('Status:', response.status)
-  logger.info('Body: ', response.body)
-  logger.info('---')
-  next()
-}
-
 const unknownEndpoint = (_, response) => {
   response.status(404).send({ error: 'unknown endpoint' })
 }
@@ -52,15 +45,13 @@ const tokenExtractor = (request, _, next) => {
   next()
 }
 
-const userExtractor = (request, response, next) => {
+// const userExtractor = (request, response, next) => {
   
-}
+// }
 
 module.exports = {
   requestLogger,
-  responseLogger,
   unknownEndpoint,
   errorHandler,
-  tokenExtractor,
-  userExtractor
+  tokenExtractor
 }
