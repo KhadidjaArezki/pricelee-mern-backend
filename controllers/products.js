@@ -1,5 +1,5 @@
 const productsRouter = require('express').Router()
-const ebayApi = require('../utils/ebay_api')
+const ebayApi = require('../third_party/ebay_api')
 
 productsRouter.post('/', async (request, response) => {
   const data = await ebayApi.searchByKeywords(request.body)

@@ -1,4 +1,4 @@
-const logger = require('./logger')
+const logger = require('../utils/logger')
 const eBay = require("ebay-node-api")
 
 const ebay = new eBay({
@@ -57,12 +57,12 @@ const getProduct = async (productId) => {
       logger.error(data.errors[0].message)
       return null
     }   
-    return dataItem.price.value
+    return data.price.value
   }
 
   const response = await ebay
     .getAccessToken()
-    .then(() => ebay.getItem(`${productId}`))
+    .then(() => ebay.getItem(`v1|${productId}|0`))
   
   return parseResponse(response)
 }

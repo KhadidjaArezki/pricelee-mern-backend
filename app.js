@@ -11,6 +11,7 @@ const trackersRouter = require('./controllers/trackers')
 const middleware = require('./utils/middleware')
 const logger = require('./utils/logger')
 const mongoose = require('mongoose')
+const scheduler = require('./third_party/sched_products_update')
 
 logger.info('connecting to', config.MONGODB_URI)
 
@@ -39,5 +40,7 @@ if (process.env.NODE_ENV === 'test') {
 
 app.use(middleware.unknownEndpoint)
 app.use(middleware.errorHandler)
+
+scheduler.update_task.start()
 
 module.exports = app
