@@ -5,5 +5,3 @@ Content-Type: application/json
   "username": "hadhad",
   "password": "secret"
 }
-
-id:62360aa85d40d70443ceaf8d

@@ -1,8 +1,8 @@
 const trackersRouter = require('express').Router()
 const jwt = require('jsonwebtoken')
 const helper = require('../utils/helpers')
-const User = require('../models/user')
 const Alert = require('../models/alert')
+const User = require('../models/user')
 const Product = require('../models/product')
 
 trackersRouter.get('/', async (request, response) => {
@@ -17,7 +17,7 @@ trackersRouter.get('/', async (request, response) => {
   const user = await User.findById(decodedToken.id)
 
   const alerts = await Alert
-    .find({user: user._id})
+    .find({ user: user._id })
     .populate('product', {
       name: 1,
       link: 1,
@@ -92,15 +92,22 @@ trackersRouter.post('/', async (request, response) => {
     product: product._id
   })
 
-  
   const savedAlert = await newAlert.save()
   user.alerts = user.alerts.concat(savedAlert._id)
   product.alerts = product.alerts.concat(savedAlert._id)
   await user.save()
   await product.save()
 
-  response.status(201).json({
-    success: 'Alert has been added to your tracker'
+  response.status(201).json({    
+    alertId: savedAlert._id,
+    productName: product.name,
+    productLink: product. link,
+    productImage: product.image,
+    productPrice: product.current_price,
+    productPriceDiff: product.initial_price - product.current_price,
+    desiredPrice: savedAlert.desired_price,
+    productCurrency: product.currency,
+    productStore: product.store
   })
 })
 
@@ -157,10 +164,15 @@ trackersRouter.put('/:id', async (request, response) => {
 
 
 trackersRouter.delete('/:id', async (request, response) => {
-  const alert = await Alert.findById(request.params.id)
+  const alert = await Alert
+    .findById(request.params.id)
+    .populate('user',    { _id: 1 })
+    .populate('product', { _id: 1 })
+
   if (alert === null) {
-    return response.status(404).end()
+      return response.status(404).end()
   }
+  
   const token = helper.getTokenFrom(request)
   const decodedToken = jwt.verify(token, process.env.SECRET)
   if (!decodedToken.id) {
@@ -168,17 +180,13 @@ trackersRouter.delete('/:id', async (request, response) => {
       error: 'token missing or invalid'
     })
   }
-  if (!decodedToken.id.toString() === alert.user.id.toString()) {
+
+  if (!( decodedToken.id.toString() === alert.user.id )) {
     return response.status(401)
   }
 
-  const user = await User.findById(alert.user.id)
-  const product = await Product.findById(alert.product.id)
-  user.alerts = user.alerts.filter(userAlert => userAlert.id !== alert.id)
-  product.alerts = product.alerts.filter(productAlert => productAlert.id !== alert.id)
-
-  await Alert.findByIdAndRemove(request.params.id)
-  response.status(204).end()
+  const removerAlert = await Alert.findByIdAndRemove(request.params.id)
+  response.status(204).json(removerAlert)
 })
 
 module.exports = trackersRouter

@@ -3,12 +3,12 @@ Content-Type: application/json
 Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImhhZGhhZCIsImlkIjoiNjIzNjBhYTg1ZDQwZDcwNDQzY2VhZjhkIiwiaWF0IjoxNjQ3NzA5NjEwLCJleHAiOjE2NDc5Njg4MTB9.-LhMFRsUTr-jU1wyzwVh4qPRmcxs921ixw4LUzuekhU
 
 {
-  "productId": "110546467601",
-  "productName": "AVS 24445 Bugflector II Stone/Bug Deflector For 01-04 Fits Nissan Frontier",
-  "productLink": "https://cgi.sandbox.ebay.com/AVS-24445-Bugflector-II-Stone-Bug-Deflector-01-04-Fits-Nissan-Frontier-/110546467601",
-  "productImage": "",
-  "productPrice": "80.33",
+  "productId": "110546385273",
+  "productName": "Portable Monitor,ARZOPA 15.6“ 1080P FHD USB-C Laptop Monitor HDMI Gaming Monitor",
+  "productLink": "https://cgi.sandbox.ebay.com/Portable-Monitor-ARZOPA-15-6-1080P-FHD-USB-C-Laptop-Monitor-HDMI-Gaming-Monitor-/110546385273",
+  "productImage": "https://i.ebayimg.sandbox.ebay.com/images/g/X3wAAOSwyGxiGIAf/s-l140.jpg",
+  "productPrice": "139.99",
   "productCurrency": "USD",
   "productStore": "ebay",
-  "desiredPrice": "50.33"
+  "desiredPrice": "99.99"
 }
