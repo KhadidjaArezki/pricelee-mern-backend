@@ -6,4 +6,4 @@ Content-Type: application/json
   "password": "secret"
 }
 
-token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImhhZGhhZCIsImlkIjoiNjIzNjBhYTg1ZDQwZDcwNDQzY2VhZjhkIiwiaWF0IjoxNjQ3NzA5NjEwLCJleHAiOjE2NDc5Njg4MTB9.-LhMFRsUTr-jU1wyzwVh4qPRmcxs921ixw4LUzuekhU"
+token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImhhZGhhZCIsImlkIjoiNjIzOWQ1NDNmOWI1MDIwOGFiNWViYjE3IiwiaWF0IjoxNjQ3OTYyMjQ2LCJleHAiOjE2NDgyMjE0NDZ9.7Q8w5K3Xq3cDuwYOhM16XCfziZpQMdy4t4ihsEQFXvU"

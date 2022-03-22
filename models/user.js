@@ -1,23 +1,16 @@
 const mongoose = require('mongoose')
-const uniqueValidator = require('mongoose-unique-validator')
 
 const userSchema = new mongoose.Schema({
   username: {
     type: String,
-    minLength: 3,
+    minLength: [ 3, 'username must be at least 3 characters long' ],
     unique: true,
-    required: true
+    required: [ true, 'username is required' ]
   },
   passwordHash: {
     type: String,
-    required: true
+    required: [ true, 'Password is required' ]
   },
-  products: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Product'
-    }
-  ],
   alerts: [
     {
       type: mongoose.Schema.Types.ObjectId,
@@ -25,8 +18,6 @@ const userSchema = new mongoose.Schema({
     }
   ]
 })
-
-userSchema.plugin(uniqueValidator)
 
 userSchema.set('toJSON', {
   transform: (document, returnedObject) => {
@@ -37,14 +28,6 @@ userSchema.set('toJSON', {
     delete returnedObject.passwordHash
   }
 })
-
-// userSchema.post('save', function(error, doc, next) {
-//   if (error.name === 'MongoServerError' && error.code === 11000) {
-//     next(new Error('There was a duplicate username error'));
-//   } else {
-//     next();
-//   }
-// });
 
 const User = mongoose.model('User', userSchema)
 

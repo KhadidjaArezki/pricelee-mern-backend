@@ -1,0 +1,14 @@
+POST http://localhost:3003/api/trackers
+Content-Type: application/json
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImhhZGhhZCIsImlkIjoiNjIzOWQ1NDNmOWI1MDIwOGFiNWViYjE3IiwiaWF0IjoxNjQ3OTYyMjQ2LCJleHAiOjE2NDgyMjE0NDZ9.7Q8w5K3Xq3cDuwYOhM16XCfziZpQMdy4t4ihsEQFXvU
+
+{
+  "productId": "110546467601",
+  "productName": "AVS 24445 Bugflector II Stone/Bug Deflector For 01-04 Fits Nissan Frontier",
+  "productLink": "https://cgi.sandbox.ebay.com/AVS-24445-Bugflector-II-Stone-Bug-Deflector-01-04-Fits-Nissan-Frontier-/110546467601",
+  "productImage": "",
+  "productPrice": "80.33",
+  "productCurrency": "USD",
+  "productStore": "ebay",
+  "desiredPrice": "50.33"
+}

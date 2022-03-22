@@ -1,5 +1,7 @@
 const axios = require('axios')
-const baseUrl = 'http://localhost:3003/api/products'
+require('dotenv').config()
+
+const baseUrl = process.env.BASE_PRODUCTS_URL
 
 const update = async (productId) => {
   const response = await axios.get(`${baseUrl}/${productId}`)

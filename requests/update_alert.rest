@@ -1,7 +1,7 @@
 
-PUT http://localhost:3003/api/trackers/6237c2f81be24865ad254484
+PUT http://localhost:3003/api/trackers/6239ea0afbccacd6374416d1
 Content-Type: application/json
-Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImhhZGhhZCIsImlkIjoiNjIzNjBhYTg1ZDQwZDcwNDQzY2VhZjhkIiwiaWF0IjoxNjQ3NzA5NjEwLCJleHAiOjE2NDc5Njg4MTB9.-LhMFRsUTr-jU1wyzwVh4qPRmcxs921ixw4LUzuekhU
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImhhZGhhZCIsImlkIjoiNjIzOWQ1NDNmOWI1MDIwOGFiNWViYjE3IiwiaWF0IjoxNjQ3OTYyMjQ2LCJleHAiOjE2NDgyMjE0NDZ9.7Q8w5K3Xq3cDuwYOhM16XCfziZpQMdy4t4ihsEQFXvU
 
 {
   "desiredPrice": "62.33"
