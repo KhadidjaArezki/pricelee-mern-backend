@@ -5,7 +5,7 @@ const ebay = new eBay({
   clientID: "Khadidja-pricetra-SBX-f3633a1dd-428cb13a",
   clientSecret: "SBX-3633a1dd0231-6ac0-42bb-aa93-72a3",
   env: "SANDBOX", // optional default = 'PRODUCTION'
-  limit: 4,
+  // limit: 4,
   headers: {
     // optional
     "X-EBAY-C-MARKETPLACE-ID": "EBAY_US",
@@ -36,7 +36,7 @@ const searchByKeywords = async (searchObject, page=1) => {
       logger.error(data[0].errorMessage[0].error[0].message)
       return []
     }
-    if (data[0].searchResult[0]['@count'] === 0) {
+    if (data[0].searchResult[0]['@count'] === '0') {
       logger.info('No matching results');
       return []
     }
