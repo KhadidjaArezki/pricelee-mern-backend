@@ -28,7 +28,7 @@ trackersRouter.get('/', async (request, response) => {
       currency     : 1,
       store        : 1
     })
- 
+
   response.json(alerts.map(alert => ({
     alertId         : alert.id,
     productName     : alert.product.name,
@@ -100,7 +100,7 @@ trackersRouter.post('/', async (request, response) => {
   await user.save()
   await product.save()
 
-  response.status(201).json({    
+  response.status(201).json({
     alertId         : savedAlert._id,
     productName     : product.name,
     productLink     : product. link,
@@ -130,11 +130,11 @@ trackersRouter.put('/:id', async (request, response) => {
   if (!( decodedToken.id.toString() === alert.user.id.toString() )) {
     return response.status(401)
   }
- 
+
   if (alert === null) {
     return response.status(404).end()
   }
-  
+
   const body = request.body
   const alertToUpdate = {
     desired_price: body.desiredPrice
@@ -144,7 +144,7 @@ trackersRouter.put('/:id', async (request, response) => {
     alertToUpdate,
     { new: true }
   )
-  .populate('product', {
+    .populate('product', {
       name         : 1,
       link         : 1,
       image        : 1,
@@ -176,9 +176,9 @@ trackersRouter.delete('/:id', async (request, response) => {
     .populate('product', { _id: 1 })
 
   if (alert === null) {
-      return response.status(404).end()
+    return response.status(404).end()
   }
-  
+
   const token = helper.getTokenFrom(request)
   const decodedToken = jwt.verify(token, process.env.SECRET)
   if (!decodedToken.id) {

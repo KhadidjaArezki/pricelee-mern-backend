@@ -7,12 +7,12 @@ usersRouter.get('/', async (_, response) => {
   const users = await User
     .find({})
     .populate('alerts', { desired_price: 1 })
-    
+
   response.json(users)
 })
 
 usersRouter.post('/', async (request, response) => {
-  const body = request.body 
+  const body = request.body
   const saltRounds = 10
   const passwordHash = await bcrypt.hash(body.password, saltRounds)
 

@@ -9,7 +9,15 @@ After a user is authenticated, they can add alerts, edit and delete them. They c
 
 The server runs scheduled tasks to search for a specific product by item id in order to update products tracked by users periodically.
 
-The backend is hosted at [https://pricelee-mern.herokuapp.com/](https://pricelee-mern.herokuapp.com/)
+The backend is hosted at [https://pricelee-mern-backend.herokuapp.com/](https://pricelee-mern-backend.herokuapp.com/)
+
+## Stack 
+This project uses the MERN stack:
+
+Mongoose.js (MongoDB): database
+Express.js: backend framework
+React: frontend framework
+Node.js: runtime environment
 
 ## Routers
 ### Users

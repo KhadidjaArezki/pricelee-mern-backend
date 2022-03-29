@@ -34,7 +34,7 @@ app.use('/api/trackers', trackersRouter)
 
 if (process.env.NODE_ENV === 'test') {
   const testingRouter = require('./controllers/testing')
-  logger.info('App in test mode');
+  logger.info('App in test mode')
   app.use('/api/testing', testingRouter)
 }
 

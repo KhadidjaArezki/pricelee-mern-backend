@@ -17,15 +17,15 @@ const errorHandler = (error, _, response, next) => {
   logger.error(error.message)
 
   if (error.name === 'CastError' && error.kind === 'ObjectId') {
-    return response.status(400).json({ 
+    return response.status(400).json({
       error: 'malformatted id'
     })
-  } 
+  }
   else if (error.name === 'ValidationError') {
     return response.status(400).json({
       error: error.message
     })
-  } 
+  }
   else if (error.name === 'MongoServerError' && error.code === 11000) {
     const field = Object.keys(error.keyValue)[0]
     const value = Object.values(error.keyValue)[0]

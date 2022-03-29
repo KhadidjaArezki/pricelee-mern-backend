@@ -1,20 +1,20 @@
 const logger = require('../utils/logger')
-const eBay = require("ebay-node-api")
+const eBay = require('ebay-node-api')
 
 const ebay = new eBay({
-  clientID: "Khadidja-pricetra-SBX-f3633a1dd-428cb13a",
-  clientSecret: "SBX-3633a1dd0231-6ac0-42bb-aa93-72a3",
-  env: "SANDBOX", // optional default = 'PRODUCTION'
+  clientID: 'Khadidja-pricetra-SBX-f3633a1dd-428cb13a',
+  clientSecret: 'SBX-3633a1dd0231-6ac0-42bb-aa93-72a3',
+  env: 'SANDBOX', // optional default = 'PRODUCTION'
   // limit: 4,
   headers: {
     // optional
-    "X-EBAY-C-MARKETPLACE-ID": "EBAY_US",
+    'X-EBAY-C-MARKETPLACE-ID': 'EBAY_US',
   },
   body: {
     grant_type: 'client_credentials',
     scope: 'https://api.ebay.com/oauth/api_scope'
   }
-});
+})
 
 
 const searchByKeywords = async (searchObject, page=1) => {
@@ -39,7 +39,7 @@ const searchByKeywords = async (searchObject, page=1) => {
       }
     }
     if (data[0].searchResult[0]['@count'] === '0') {
-      logger.info('No matching results');
+      logger.info('No matching results')
       return []
     }
     const dataItems =  data[0].searchResult[0].item
@@ -58,14 +58,14 @@ const getProduct = async (productId) => {
     if (data.errors) {
       logger.error(data.errors[0].message)
       return null
-    }   
+    }
     return data.price.value
   }
 
   const response = await ebay
     .getAccessToken()
     .then(() => ebay.getItem(`v1|${productId}|0`))
-  
+
   return parseResponse(response)
 }
 
