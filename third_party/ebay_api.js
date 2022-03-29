@@ -34,7 +34,9 @@ const searchByKeywords = async (searchObject, page=1) => {
   const parseResponse = (data) => {
     if (data[0].ack[0] === 'Failure') {
       logger.error(data[0].errorMessage[0].error[0].message)
-      return []
+      return {
+        error: 'Something went wrong on the store server'
+      }
     }
     if (data[0].searchResult[0]['@count'] === '0') {
       logger.info('No matching results');
@@ -53,7 +55,7 @@ const searchByKeywords = async (searchObject, page=1) => {
 const getProduct = async (productId) => {
 
   const parseResponse = (data) => {
-    if (data.errors !== undefined) {
+    if (data.errors) {
       logger.error(data.errors[0].message)
       return null
     }   

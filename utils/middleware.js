@@ -44,6 +44,11 @@ const errorHandler = (error, _, response, next) => {
       error: 'token expired'
     })
   }
+  else if  (error.name === 'InternalServerError') {
+    return response.status(500).json({
+      error: 'Internal Server Error'
+    })
+  }
 
   next(error)
 }
@@ -55,10 +60,6 @@ const tokenExtractor = (request, _, next) => {
   }
   next()
 }
-
-// const userExtractor = (request, response, next) => {
-  
-// }
 
 module.exports = {
   requestLogger,

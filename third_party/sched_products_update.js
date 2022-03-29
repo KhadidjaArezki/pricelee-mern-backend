@@ -3,7 +3,7 @@ const logger = require('../utils/logger')
 const Product = require('../models/product')
 const productService = require('../services/products')
 
-const update_task = cron.schedule('0 0 15 * * *', async () => {
+const update_task = cron.schedule('0 15 00 * * *', async () => {
   logger.info('****************************************')
   logger.info('******* Running scheduled task**********')
   logger.info('***** Updating products prices in db ****')

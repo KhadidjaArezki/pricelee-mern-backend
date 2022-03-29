@@ -11,6 +11,7 @@ productsRouter.post('/', async (request, response) => {
 productsRouter.get('/:product_id', async (request, response) => {
   const productId = request.params.product_id
   const data = await ebayApi.getProduct(productId)
+
   return response
     .status(200)
     .send(data)
