@@ -14,10 +14,10 @@ The backend is hosted at [https://pricelee-mern-backend.herokuapp.com/](https://
 ## Stack 
 This project uses the MERN stack:
 
-Mongoose.js (MongoDB): database
-Express.js: backend framework
-React: frontend framework
-Node.js: runtime environment
+- Mongoose.js (MongoDB): database
+- Express.js: backend framework
+- React: frontend framework
+- Node.js: runtime environment
 
 ## Routers
 ### Users
