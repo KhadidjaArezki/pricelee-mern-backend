@@ -1,0 +1,1 @@
+DELETE http://localhost:3001/api/tokens/63cd50df209052616e52f1d8

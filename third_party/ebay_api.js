@@ -1,59 +1,56 @@
-const logger = require('../utils/logger')
-const eBay = require('ebay-node-api')
+require("dotenv").config()
+const logger = require("../utils/logger")
+const eBay = require("ebay-node-api")
 
 const ebay = new eBay({
-  clientID: 'Khadidja-pricetra-SBX-f3633a1dd-428cb13a',
-  clientSecret: 'SBX-3633a1dd0231-6ac0-42bb-aa93-72a3',
-  env: 'SANDBOX', // optional default = 'PRODUCTION'
+  clientID: process.env.EBAY_CLIENT_ID,
+  clientSecret: process.env.EBAY_CLIENT_SECRET,
+  env: process.env.EBAY_ENV, // optional default = 'PRODUCTION'
   // limit: 4,
   headers: {
     // optional
-    'X-EBAY-C-MARKETPLACE-ID': 'EBAY_US',
+    "X-EBAY-C-MARKETPLACE-ID": process.env.EBAY_MARKETPLACE_ID,
   },
   body: {
-    grant_type: 'client_credentials',
-    scope: 'https://api.ebay.com/oauth/api_scope'
-  }
+    grant_type: process.env.EBAY_GRANT_TYPE,
+    scope: process.env.EBAY_SCOPE,
+  },
 })
 
-
-const searchByKeywords = async (searchObject, page=1) => {
-
+const searchByKeywords = async (searchObject, page = 1) => {
   const createDataObject = (dataItem) => {
     return {
       productId: dataItem.itemId[0],
       productName: dataItem.title[0],
       productLink: dataItem.viewItemURL[0],
       productImage: dataItem.galleryURL[0],
-      productPrice: dataItem.sellingStatus[0].currentPrice[0]['__value__'],
-      productCurrency: dataItem.sellingStatus[0].currentPrice[0]['@currencyId'],
-      productStore: 'ebay'
+      productPrice: dataItem.sellingStatus[0].currentPrice[0]["__value__"],
+      productCurrency: dataItem.sellingStatus[0].currentPrice[0]["@currencyId"],
+      productStore: "ebay",
     }
   }
 
   const parseResponse = (data) => {
-    if (data[0].ack[0] === 'Failure') {
+    if (data[0].ack[0] === "Failure") {
       logger.error(data[0].errorMessage[0].error[0].message)
       return {
-        error: 'Something went wrong on the store server'
+        error: "Something went wrong on the store server",
       }
     }
-    if (data[0].searchResult[0]['@count'] === '0') {
-      logger.info('No matching results')
+    if (data[0].searchResult[0]["@count"] === "0") {
+      logger.info("No matching results")
       return []
     }
-    const dataItems =  data[0].searchResult[0].item
-    return dataItems.map(dataItem => createDataObject(dataItem))
+    const dataItems = data[0].searchResult[0].item
+    return dataItems.map((dataItem) => createDataObject(dataItem))
   }
 
-  const response = await ebay
-    .findItemsAdvanced(searchObject)
+  const response = await ebay.findItemsAdvanced(searchObject)
 
   return parseResponse(response)
 }
 
 const getProduct = async (productId) => {
-
   const parseResponse = (data) => {
     if (data.errors) {
       logger.error(data.errors[0].message)
@@ -71,5 +68,5 @@ const getProduct = async (productId) => {
 
 module.exports = {
   searchByKeywords,
-  getProduct
+  getProduct,
 }

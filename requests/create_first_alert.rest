@@ -1,6 +1,6 @@
-POST http://localhost:3003/api/trackers
+POST http://localhost:3001/api/trackers
 Content-Type: application/json
-Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImhhZGhhZCIsImlkIjoiNjIzOWQ1NDNmOWI1MDIwOGFiNWViYjE3IiwiaWF0IjoxNjQ3OTYyMjQ2LCJleHAiOjE2NDgyMjE0NDZ9.7Q8w5K3Xq3cDuwYOhM16XCfziZpQMdy4t4ihsEQFXvU
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzY2Q1MGRmMjA5MDUyNjE2ZTUyZjFkOCIsInVzZXJuYW1lIjoiaGFkaGFkIiwiaWF0IjoxNjc0NDA0OTEzLCJleHAiOjE2NzQ0MDUyMTN9.AwWjTbFqcIATEUw7hUYQjt2I5sec-qXTF-6QokI9xkA
 
 {
   "productId": "110546385273",
