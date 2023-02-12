@@ -5,6 +5,8 @@ Pricelee is a price tracking service. It allows you to search products from popu
 
 For the moment, pricelee only supports calls to the ebay api. It can search by keywords, category id, and price range.
 
+The authentication model depends on refresh tokens to avoid frequent signin. Refresh token rotation and reuse detection is implemented to block unauthorized requests.
+
 After a user is authenticated, they can add alerts, edit and delete them. They can see the complete list of the alerts they created.
 
 The server runs scheduled tasks to search for a specific product by item id in order to update products tracked by users periodically.
@@ -29,13 +31,28 @@ This project uses the MERN stack:
 - Handles signup POST requests.
 - Receives a user name and password.
 - Creates a new user - from username and hashed password - and stores it in the database.
-- Upon signup, router redirects to login with user credentials.
+- Updates the user record with a new refresh token.
+- Returns username, token, and an http-only secure cookie with the new refresh token.
 
 ### Login
 
 - Handles login POST requests.
 - Verifies the validity of the received user credentials.
-- Returns username and token.
+- Updates refresh token in user table and checks for token reuse cases.
+- Returns username, token, and an http-only secure cookie with a new refresh token.
+
+### Tokens
+
+1. GET requests:
+
+- Verifies the validity of the received refresh token.
+- Updates refresh token in user table and checks for token reuse cases.
+- Returns a valid access token and an http-only secure cookie with a new refresh token.
+
+2. DELETE requests:
+
+- Logs the user out by deleting the current refresh token from the user table.
+- Clears the secure cookie holding the current refresh token
 
 ### Products
 

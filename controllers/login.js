@@ -4,54 +4,77 @@ const User = require("../models/user")
 const { generateAllTokens } = require("../utils/helpers")
 
 loginRouter.post("/", async (request, response) => {
-  const body = request.body
+  const cookies = request.cookies
+  const { username, password } = request.body
 
-  const user = await User.findOne({ username: body.username })
+  const foundUser = await User.findOne({ username: username }).exec()
   const passwordCorrect =
-    user === null
+    foundUser === null
       ? false
-      : await bcrypt.compare(body.password, user.passwordHash)
+      : await bcrypt.compare(password, foundUser.passwordHash)
 
-  if (!(user && passwordCorrect)) {
+  if (!(foundUser && passwordCorrect)) {
     return response.status(401).json({
-      error: "invalid user credentials",
+      error: "invalid foundUser credentials",
     })
   }
 
-  const { token, refreshToken } = generateAllTokens(user)
-  /* Update token and refresh token in user document */
-  const userToUpdate = {
-    refreshToken,
+  const { token, newRefreshToken } = generateAllTokens(foundUser)
+  // If a cookie is sent with an rt, replace it with a new one
+  let newRefreshTokenArray = !cookies?.jwt
+    ? foundUser.refreshToken
+    : foundUser.refreshToken.filter((rt) => rt !== cookies.jwt)
+
+  if (cookies?.jwt) {
+    /*
+      1) User logs in but never uses RT and does not logout
+      2) RT is stolen
+      3) If 1 & 2, reuse detection is needed to clear all RTs when user logs in
+    */
+    const refreshToken = cookies.jwt
+    const foundToken = await User.findOne({ refreshToken }).exec()
+
+    // Detected refresh token reuse!
+    if (!foundToken) {
+      newRefreshTokenArray = []
+    }
+    response.clearCookie("jwt", {
+      httpOnly: true,
+      sameSite: "None",
+      secure: true,
+    })
   }
-  const updatedUser = await User.findByIdAndUpdate(
-    user.id,
-    {
-      ...userToUpdate,
-      updatedAt: new Date().toISOString(),
-    },
-    { new: true }
-  )
+
+  // Saving refreshToken with current user
+  foundUser.refreshToken = [...newRefreshTokenArray, newRefreshToken]
+  foundUser.updatedAt = new Date().toISOString()
+  await foundUser.save()
+
+  // Creates Secure Cookie with refresh token
+  response.cookie("jwt", newRefreshToken, {
+    httpOnly: true,
+    secure: true,
+    sameSite: "None",
+    maxAge: 24 * 60 * 60 * 1000,
+  })
 
   response.status(200).json({
-    username: updatedUser.username,
-    refreshToken: updatedUser.refreshToken,
+    username: foundUser.username,
     token,
   })
 
-  // const userForToken = {
-  //   username: user.username,
-  //   id: user._id,
+  /* Update token and refresh token in user document */
+  // const userToUpdate = {
+  //   refreshToken,
   // }
-
-  // const token = jwt.sign(
-  //   userForToken,
-  //   process.env.SECRET,
-  //   { expiresIn: 72*3600 }
+  // const updatedUser = await User.findByIdAndUpdate(
+  //   foundUser.id,
+  //   {
+  //     ...userToUpdate,
+  //     updatedAt: new Date().toISOString(),
+  //   },
+  //   { new: true }
   // )
-
-  // response
-  // .status(200)
-  // .send({ token, username: user.username })
 })
 
 module.exports = loginRouter

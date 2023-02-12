@@ -1,69 +1,56 @@
-const logger = require('./logger')
+const logger = require("./logger")
 
 const requestLogger = (request, _, next) => {
-  logger.info('---')
-  logger.info('Method:', request.method)
-  logger.info('Path:  ', request.path)
-  logger.info('Body:  ', request.body)
-  logger.info('---')
+  logger.info("---")
+  logger.info("Method:", request.method)
+  logger.info("Path:  ", request.path)
+  logger.info("Body:  ", request.body)
+  logger.info("---")
   next()
 }
 
 const unknownEndpoint = (_, response) => {
-  response.status(404).send({ error: 'unknown endpoint' })
+  response.status(404).send({ error: "unknown endpoint" })
 }
 
 const errorHandler = (error, _, response, next) => {
   logger.error(error.message)
 
-  if (error.name === 'CastError' && error.kind === 'ObjectId') {
+  if (error.name === "CastError" && error.kind === "ObjectId") {
     return response.status(400).json({
-      error: 'malformatted id'
+      error: "malformatted id",
     })
-  }
-  else if (error.name === 'ValidationError') {
+  } else if (error.name === "ValidationError") {
     return response.status(400).json({
-      error: error.message
+      error: error.message,
     })
-  }
-  else if (error.name === 'MongoServerError' && error.code === 11000) {
+  } else if (error.name === "MongoServerError" && error.code === 11000) {
+    // unique constraint violation has occured
     const field = Object.keys(error.keyValue)[0]
     const value = Object.values(error.keyValue)[0]
 
     return response.status(409).json({
-      error: `${ field }: ${ value } already exists`
+      error: `${field}: ${value} already exists`,
     })
-  }
-  else if (error.name === 'JsonWebTokenError') {
+  } else if (error.name === "JsonWebTokenError") {
     return response.status(401).json({
-      error: 'invalid token'
+      error: "invalid token",
     })
-  }
-  else if (error.name === 'TokenExpiredError') {
+  } else if (error.name === "TokenExpiredError") {
     return response.status(401).json({
-      error: 'token expired'
+      error: "token expired",
     })
-  }
-  else if  (error.name === 'InternalServerError') {
+  } else if (error.name === "InternalServerError") {
     return response.status(500).json({
-      error: 'Internal Server Error'
+      error: "Internal Server Error",
     })
   }
 
   next(error)
 }
 
-const tokenExtractor = (request, _, next) => {
-  const authorization = request.get('authorization')
-  if (authorization && authorization.toLowerCase().startsWith('bearer ')) {
-    return authorization.substring(7)
-  }
-  next()
-}
-
 module.exports = {
   requestLogger,
   unknownEndpoint,
   errorHandler,
-  tokenExtractor
 }

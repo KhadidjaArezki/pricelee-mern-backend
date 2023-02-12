@@ -23,10 +23,10 @@ usersRouter.post("/", async (request, response) => {
 
   await user.save()
 
-  const { token, refreshToken } = generateAllTokens(user)
+  const { token, newRefreshToken } = generateAllTokens(user)
   /* Update token and refresh token in user document */
   const userToUpdate = {
-    refreshToken,
+    refreshToken: newRefreshToken,
   }
   const updatedUser = await User.findByIdAndUpdate(
     user.id,
@@ -36,9 +36,14 @@ usersRouter.post("/", async (request, response) => {
     { new: true }
   )
 
+  response.cookie("jwt", newRefreshToken, {
+    httpOnly: true,
+    secure: true,
+    sameSite: "None",
+    maxAge: 24 * 60 * 60 * 1000,
+  })
   response.status(200).json({
     username: updatedUser.username,
-    refreshToken: updatedUser.refreshToken,
     token,
   })
 })

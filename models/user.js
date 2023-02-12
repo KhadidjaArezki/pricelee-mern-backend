@@ -17,8 +17,8 @@ const userSchema = new mongoose.Schema({
       ref: "Alert",
     },
   ],
+  refreshToken: [String],
   createdAt: mongoose.Schema.Types.String,
-  refreshToken: mongoose.Schema.Types.String,
   updatedAt: mongoose.Schema.Types.String,
 })
 
