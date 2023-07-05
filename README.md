@@ -11,7 +11,7 @@ After a user is authenticated, they can add alerts, edit and delete them. They c
 
 The server runs scheduled tasks to search for a specific product by item id in order to update products tracked by users periodically.
 
-The project is hosted at [https://web-production-b540a.up.railway.app/](https://web-production-b540a.up.railway.app/)
+The project is hosted at [https://pricelee-mern-backend.onrender.com/api/](https://pricelee-mern-backend.onrender.com/api/)
 
 The frontend repository is located at [https://github.com/KhadidjaArezki/pricelee-mern-frontend]
 
