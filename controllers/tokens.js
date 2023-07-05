@@ -11,7 +11,10 @@ const { generateAllTokens } = require("../utils/helpers")
 */
 tokensRouter.get("/", async (request, response) => {
   const cookies = request.cookies
-  if (!cookies?.jwt) return response.sendStatus(401)
+  if (!cookies?.jwt) {
+    return response.sendStatus(401)
+  }
+
   const refreshToken = cookies.jwt
   response.clearCookie("jwt", {
     httpOnly: true,
@@ -68,7 +71,7 @@ tokensRouter.get("/", async (request, response) => {
       sameSite: "None",
       maxAge: 24 * 60 * 60 * 1000,
     })
-    response.status(200).send(token)
+    response.status(200).json({ token })
   })
 })
 

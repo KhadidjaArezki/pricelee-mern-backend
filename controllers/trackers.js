@@ -187,7 +187,7 @@ trackersRouter.delete("/:id", async (request, response) => {
   }
 
   const removedAlert = await Alert.findByIdAndRemove(request.params.id)
-  response.status(200).json(removedAlert)
+  return response.status(200).json(removedAlert)
 })
 
 module.exports = trackersRouter

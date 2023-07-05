@@ -8,6 +8,7 @@ loginRouter.post("/", async (request, response) => {
   const { username, password } = request.body
 
   const foundUser = await User.findOne({ username: username }).exec()
+
   const passwordCorrect =
     foundUser === null
       ? false
@@ -15,7 +16,7 @@ loginRouter.post("/", async (request, response) => {
 
   if (!(foundUser && passwordCorrect)) {
     return response.status(401).json({
-      error: "invalid foundUser credentials",
+      error: "invalid user credentials",
     })
   }
 

@@ -29,7 +29,12 @@ mongoose
     logger.error("error connecting to database:", error.message)
   })
 
-app.use(cors())
+const corsOption = {
+    origin: ['http://localhost:3000'],
+    credentials: true
+}
+app.use(cors(corsOption));
+//app.use(cors())
 app.use(express.json())
 app.use(cookieParser())
 app.use(middleware.requestLogger)

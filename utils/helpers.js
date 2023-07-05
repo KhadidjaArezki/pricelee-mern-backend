@@ -22,7 +22,7 @@ const generateAllTokens = (user) => {
   const token = jwt.sign(userForToken, process.env.SECRET, { expiresIn: "5m" })
 
   const newRefreshToken = jwt.sign(userForToken, process.env.SECRET, {
-    expiresIn: "1d",
+    expiresIn: "12h",
   })
 
   return {
