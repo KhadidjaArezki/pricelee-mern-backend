@@ -30,11 +30,12 @@ mongoose
   })
 
 const corsOption = {
-    origin: ['http://localhost:3000'],
-    credentials: true
+  origin: ["https://pricelee-mern-backend.onrender.com/api"],
+  credentials: true,
 }
-app.use(cors(corsOption));
+app.use(cors(corsOption))
 //app.use(cors())
+app.use(express.static("build"))
 app.use(express.json())
 app.use(cookieParser())
 app.use(middleware.requestLogger)

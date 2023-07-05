@@ -9,6 +9,8 @@
     "test": "cross-env NODE_ENV=test jest --verbose --runInBand",
     "start:test": "cross-env NODE_ENV=test node index.js",
     "lint": "eslint . --fix",
+    "build:ui": "rm -rf build && cd ../frontend && npm run build && cp -r build ../backend",
+    "deploy:full": "npm run build:ui && git add . && git commit -m uibuild && git push",
     "deploy": "git push heroku master",
     "logs:prod": "heroku logs --tail",
     "shell-config": "npm config set script-shell \"C:\\Program Files\\git\\bin\\bash.exe\""
