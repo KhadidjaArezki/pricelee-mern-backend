@@ -30,12 +30,11 @@ mongoose
   })
 
 const corsOption = {
-  origin: ["https://pricelee-mern-backend.onrender.com/api"],
+  origin: ["https://pricelee-mern-backend.onrender.com/"],
   credentials: true,
 }
 app.use(cors(corsOption))
-//app.use(cors())
-app.use(express.static("build"))
+
 app.use(express.json())
 app.use(cookieParser())
 app.use(middleware.requestLogger)
@@ -44,6 +43,11 @@ app.use("/api/users", usersRouter)
 app.use("/api/products", productsRouter)
 app.use("/api/trackers", trackersRouter)
 app.use("/api/tokens", tokensRouter)
+
+app.use(express.static("build"))
+app.get('*', function(req, res) {
+  res.sendFile('index.html', {root: './build/'})
+})
 
 if (process.env.NODE_ENV === "test") {
   const testingRouter = require("./controllers/testing")
