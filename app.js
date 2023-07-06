@@ -30,7 +30,7 @@ mongoose
   })
 
 const corsOption = {
-  origin: ["https://pricelee-mern-backend.onrender.com/"],
+  origin: ["https://pricelee-mern-backend.onrender.com/", "http://localhost:3000"],
   credentials: true,
 }
 app.use(cors(corsOption))
